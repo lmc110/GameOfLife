@@ -98,54 +98,45 @@ Returns: neighbors (int)
 int findNumNeighbors (int row, int col) {
     int neighbors = 0;
     
-    if ( row - 1 >= 0 && col - 1 >= 0 )
-   {
+    if ( row - 1 >= 0 && col - 1 >= 0 ) {
       if ( grid[row - 1][col - 1] == '1' )
          neighbors++;
    }
  
-   if ( row - 1 >= 0 )
-   {
+   if ( row - 1 >= 0 ) {
       if ( grid[row - 1][col] == '1' )
          neighbors++;
    }
  
-   if ( row - 1 >= 0 && col + 1 < numCols )
-   {
+   if ( row - 1 >= 0 && col + 1 < numCols ) {
       if ( grid[row - 1][col + 1] == '1' )
          neighbors++;
    }
  
-   if ( col - 1 >= 0 )
-   {
+   if ( col - 1 >= 0 ) {
       if ( grid[row][col - 1] == '1' )
          neighbors++;
    }
  
-   if ( col + 1 < numCols )
-   {
+   if ( col + 1 < numCols ) {
       if ( grid[row][col + 1] == '1' )
          neighbors++;
    }
  
-   if ( row + 1 < numRows || col - 1 >= 0 )
-   {
+   if ( row + 1 < numRows || col - 1 >= 0 ) {
       if ( grid[row + 1][col - 1] == '1' )
          neighbors++;
    }
  
-   if ( row + 1 < numRows )
-   {
+   if ( row + 1 < numRows ) {
       if ( grid[row + 1][col] == '1' )
          neighbors++;
    }
  
-   if ( row + 1 < numRows || col + 1 < numCols )
-   {
+   if ( row + 1 < numRows || col + 1 < numCols ) {
       if ( grid[row + 1][col + 1] == '1' )
          neighbors++;
    }
-    
     return neighbors;
 }
 
@@ -163,8 +154,7 @@ char applyRule( int neighbors, int row, int col) {
     char cell;      // holds live or dead cell status
     
     //apply rules for live cells
-   if ( grid[row][col] == '1' )
-   {
+   if ( grid[row][col] == '1' ) {
       if ( neighbors >= 4 ) //cell dies of overcrowding
          cell = '0';
  
@@ -175,15 +165,13 @@ char applyRule( int neighbors, int row, int col) {
          cell = '1';
    }
    //apply rules for dead cells
-   else if ( grid[row][col] == '0' )
-   {
+   else if ( grid[row][col] == '0' ) {
       if ( neighbors == 3 )  //cell is born
          cell = '1';
  
       if ( neighbors < 3 || neighbors > 3 )  //cell is unchanged
          cell = '0';
    }
- 
    return cell;
 }
 
@@ -203,22 +191,18 @@ void iterateGeneration ()
  
    string *newgrid = new string[numRows+1];
  
-   for ( int row = 0; row < numRows; row++ )
-   {
+   for ( int row = 0; row < numRows; row++ ) {
       string temp = "";  //creates a storage place for the next line
  
-      for ( int col = 0; col < numCols; col++ )
-      {
+      for ( int col = 0; col < numCols; col++ ) {
          //calls function to check for neighbors
          neighbors = findNumNeighbors ( row, col );
  
          //calls function to apply rules and adds cell to temp
          temp += applyRule ( neighbors, row, col );
       }
- 
       //assigns row of generated cells to new grid
       newgrid[row] = temp;
- 
    }
    //free the grid memory
    delete [] grid;
